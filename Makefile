@@ -14,8 +14,13 @@ ERL_LDFLAGS ?= -L$(ERL_EI_LIBDIR)
 CFLAGS ?= -O2 -Wall -Wextra
 LDFLAGS += -fPIC -shared -lsodium -lei -lerl_interface
 
-ifeq ($(CROSSCOMPILE),)
+ifeq ($(shell uname),FreeBSD)
 CFLAGS += -I/usr/local/include/sodium
+LDFLAGS += -L/usr/local/lib
+endif
+
+ifeq ($(CROSSCOMPILE),)
+CFLAGS += -I/usr/local/include
 LDFLAGS += -L/usr/local/lib
 
 ifeq ($(shell uname),Darwin)
